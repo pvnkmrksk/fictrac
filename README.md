@@ -49,7 +49,7 @@ The FicTrac source code can be built for both Windows and Linux (e.g. Ubuntu) op
         1. [Cmake build system](https://cmake.org/download/) (Windows win64-x64 Installer)
         2. If you don't already have Visual Studio (C++ workflow) installed, you will need to install the [Build Tools for Visual Studio](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2019).
     2. Linux only:
-        1. Run the following from terminal to install necessary build tools and dependencies:
+        1. Run the following from terminal to install necessary build tools and dependencies (on Ubuntu-22.04 `libavresample-dev` is not available, but apparently also not needed):
         ```
         sudo apt-get install gcc g++ git cmake curl unzip tar yasm pkg-config libgtk2.0-dev libavformat-dev libavcodec-dev libavresample-dev libswscale-dev libopencv-dev
         ```
