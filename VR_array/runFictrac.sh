@@ -1,9 +1,9 @@
 #!/bin/bash
 
-dir1="/home/labadmin/fictrac/VR_array/VR1"
-dir2="/home/labadmin/fictrac/VR_array/VR2"
-dir3="/home/labadmin/fictrac/VR_array/VR3"
-dir4="/home/labadmin/fictrac/VR_array/VR4"
+dir1="$HOME/src/fictrac/VR_array/VR1"
+dir2="$HOME/src/fictrac/VR_array/VR2"
+dir3="$HOME/src/fictrac/VR_array/VR3"
+dir4="$HOME/src/fictrac/VR_array/VR4"
 
 start_fictrac="sudo ../../bin/fictrac config.txt"
 
