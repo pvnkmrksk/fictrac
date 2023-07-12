@@ -50,3 +50,4 @@ data
 *.dat
 *.log
 include/fictrac_version.h
+*template.png
