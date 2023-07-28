@@ -51,7 +51,9 @@ The FicTrac source code can be built for both Windows and Linux (e.g. Ubuntu) op
     2. Linux only:
         1. Run the following from terminal to install necessary build tools and dependencies (on Ubuntu-22.04 `libavresample-dev` is not available, but apparently also not needed):
         ```
-        sudo apt-get install gcc g++ git cmake curl unzip tar yasm pkg-config libgtk2.0-dev libavformat-dev libavcodec-dev libswscale-dev libopencv-dev libnlopt-dev libboost-all-dev
+        sudo apt-get install gcc g++ git cmake curl unzip tar yasm pkg-config libgtk2.0-dev libavformat-dev libavcodec-dev libswscale-dev libopencv-dev 
+        
+        libnlopt-dev libboost-all-dev
 
         ```
     3. (Windows and Linux) Clone or download the [Vcpkg](https://github.com/Microsoft/vcpkg) repository and then follow the guide to install (make sure to perform the bootstrap and integration steps).
@@ -62,6 +64,8 @@ The FicTrac source code can be built for both Windows and Linux (e.g. Ubuntu) op
 ```
 2. Clone or download the FicTrac repository, then navigate to that folder, open a terminal, and create a build directory:
 ```
+mkdir src
+cd src
 git clone https://github.com/pvnkmrksk/fictrac.git
 cd fictrac
 mkdir build

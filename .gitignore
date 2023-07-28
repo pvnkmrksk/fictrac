@@ -50,5 +50,6 @@ data
 *.dat
 *.log
 include/fictrac_version.h
+*.code-workspace
 *template.png
 *ictrac-configImg.png
