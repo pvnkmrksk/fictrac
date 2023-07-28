@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# alias rfic='sudo bash $HOME/src/fictrac/VR_array/runFictrac.sh'
+# alias rcon='sudo bash $HOME/src/fictrac/VR_array/runConfig.sh'
 
 
 # check if an argument is provided
