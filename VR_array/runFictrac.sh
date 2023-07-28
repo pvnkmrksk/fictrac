@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# alias rfic='sudo bash $HOME/src/fictrac/VR_array/runFictrac.sh'
+
+
 # Maximum VR number
 max_vr=4
 

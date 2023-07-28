@@ -51,3 +51,4 @@ data
 *.log
 include/fictrac_version.h
 *template.png
+*ictrac-configImg.png
