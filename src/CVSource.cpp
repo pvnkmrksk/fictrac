@@ -33,13 +33,18 @@ CVSource::CVSource(std::string input)
         LOG_DBG("Trying source as camera id...");
         if (input.size() > 2) { throw std::exception(); }
         int id = std::stoi(input);
-        _cap = std::shared_ptr<cv::VideoCapture>(new cv::VideoCapture(id));
+
+        // Open camera with V4L2 backend
+        _cap = std::shared_ptr<cv::VideoCapture>(new cv::VideoCapture(id, cv::CAP_V4L2));
+        
+        (*_cap).set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
         if (!_cap->isOpened()) { throw 0; }
         *_cap >> test_frame;
         if (test_frame.empty()) { throw 0; }
         LOG("Using source type: camera id.");
         _open = true;
         _live = true;
+
     }
     catch (...) {
         try {
