@@ -36,15 +36,29 @@ def process_line(line, socket_zmq):
     except Exception as e:
         print(f"Failed to send data over ZMQ. Error: {e}")
 
+
+def colored_print(message, color):
+    color_codes = {
+        "red": "\033[91m",
+        "green": "\033[92m",
+        "reset": "\033[0m"
+    }
+    print(f"{color_codes[color]}{message}{color_codes['reset']}")
+
+
 @click.command()
 @click.option('--zmq-url', type=str, default='tcp://*:9871', help='ZMQ binding URL.')
 @click.option('--sock-host', type=str, default='127.0.0.1', help='UDP socket host IP.')
 @click.option('--sock-port', type=int, default=1111, help='UDP socket port.')
 @click.option('--timeout', type=int, default=1, help='Timeout for receiving data from FicTrac.')
+
+
+
+
 def main(zmq_url, sock_host, sock_port, timeout):
     """Receive data from FicTrac and transmit it to ZMQ."""
 
-    print(f"Initializing ZMQ binding on {zmq_url}...")
+    print(f"\n\n\n\n\nInit ZMQ binding on {zmq_url}...")
     context = zmq.Context()
     socket_zmq = context.socket(zmq.PUB)
     socket_zmq.bind(zmq_url)
@@ -55,11 +69,17 @@ def main(zmq_url, sock_host, sock_port, timeout):
         sock.setblocking(0)
 
         data = ""
-        print("Listening for data...")
+        colored_print("Listening for data...", "green")
+
+        no_data_flag = False  # Introduced a flag here
 
         while True:
             ready = select.select([sock], [], [], timeout)
             if ready[0]:
+                if no_data_flag:  # If the last cycle had no data but now data is incoming.
+                    colored_print("\n\nYayyy! Data reception resumed.","green")
+                    no_data_flag = False
+
                 try:
                     new_data = sock.recv(1024)
                     if not new_data:
@@ -75,7 +95,12 @@ def main(zmq_url, sock_host, sock_port, timeout):
                 except Exception as e:
                     print(f"Error processing data: {e}")
             else:
-                print('No data received within the timeout period. Retrying...')
+                if not no_data_flag:  # Only print this message the first time data stops coming in.
+                    colored_print('\n\nNo data received within timeout period.\nRetrying...', "red")
+
+                no_data_flag = True
+
+
 
 if __name__ == '__main__':
     main()
