@@ -1,7 +1,12 @@
 #!/bin/bash
 
-# alias rfic='sudo bash $HOME/src/fictrac/VR_array/runFictrac.sh'
+USER_HOME=$(eval echo ~$(logname))
 
+
+
+#alias rfic='sudo bash $HOME/src/fictrac/VR_array/runFictrac.sh'
+# Prompt for sudo password once at the beginning to update the sudo timestamp
+#sudo -v
 
 # Maximum VR number
 max_vr=4
@@ -22,11 +27,14 @@ else
   fi
 fi
 
-start_fictrac="sudo ../../bin/fictrac config.txt"
+#start_fictrac="sudo ../../bin/fictrac config.txt"
+start_fictrac="$USER_HOME/src/fictrac/bin/fictrac config.txt"
 
 # Start the fictrac in the corresponding dirs
 for vr in $vr_list
 do
-  dir="$HOME/src/fictrac/VR_array/VR$vr"
+  dir="$USER_HOME/src/fictrac/VR_array/VR$vr"
+  echo "Opening fictrac in directory $dir"
   gnome-terminal --tab -- bash -c "cd $dir; $start_fictrac; exec bash"
 done
+
