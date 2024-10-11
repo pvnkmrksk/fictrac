@@ -13,8 +13,10 @@
 #include <string>
 #include <csignal>
 #include <memory>
+#include <opencv2/opencv.hpp>  // Ensure OpenCV is included
 
 using namespace std;
+using namespace cv;  // Use OpenCV namespace
 
 /// Ctrl-c handling
 bool _active = true;
@@ -77,6 +79,23 @@ int main(int argc, char *argv[])
         if (!_active) {
             tracker->terminate();
         }
+
+        // Check if display is enabled and get the canvas
+        if (tracker->isDisplayEnabled()) {  // Ensure this method exists in Trackball
+            cv::Mat canvas = tracker->getCanvas();  // Ensure this method exists in Trackball
+            if (!canvas.empty()) {
+                cv::imshow("FicTrac-debug", canvas);
+                uint16_t key = cv::waitKey(1);
+                if (key == 0x1B) {  // esc
+                    LOG("Exiting");
+                    tracker->terminate();
+                } else if (key == 0x52) { // shift+R
+                    LOG("Resetting map!");
+                    tracker->requestReset();  // Ensure this method exists in Trackball
+                }
+            }
+        }
+
         ficsleep(250);
     }
 

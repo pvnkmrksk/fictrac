@@ -1430,18 +1430,6 @@ void Trackball::drawCanvas(shared_ptr<DrawData> data)
         3 * DRAW_CELL_DIM + 3, 1 * DRAW_CELL_DIM - 8,
         255, 255, 0);
 
-    /// Display
-    cv::imshow("FicTrac-debug", canvas);
-    uint16_t key = cv::waitKey(1);
-    if (key == 0x1B) {  // esc
-        LOG("Exiting");
-        terminate();
-    }
-    else if (key == 0x52) { // shift+R
-        LOG("Resetting map!");
-        _do_reset = true;
-    }
-
     if (_save_raw) {
         _raw_vid.write(src_frame);
     }
@@ -1451,6 +1439,9 @@ void Trackball::drawCanvas(shared_ptr<DrawData> data)
     if (_save_raw || _save_debug) {
         _vid_frames->addMsg(to_string(log_frame) + "\n");
     }
+
+    // Remove the following line
+    // return canvas;
 }
 
 ///
@@ -1494,4 +1485,17 @@ bool Trackball::writeTemplate(std::string fn)
         LOG("Template saved to disk (%s).", template_fn.c_str());
     }
     return ret;
+}
+
+bool Trackball::isDisplayEnabled() const {
+    return _do_display;  // Assuming _do_display is a member variable controlling display
+}
+
+cv::Mat Trackball::getCanvas() {
+    // Return the current canvas or frame to be displayed
+    return _sphere_view;  // Assuming _sphere_view is the canvas
+}
+
+void Trackball::requestReset() {
+    _do_reset = true;  // Assuming _do_reset is a member variable controlling reset
 }

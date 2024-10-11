@@ -100,6 +100,11 @@ public:
     void dumpStats();
     bool writeTemplate(std::string fn = "");
 
+    // Declare the methods
+    bool isDisplayEnabled() const;
+    cv::Mat getCanvas();
+    void requestReset();
+
 private:
     /// Worker function.
     void process();
