@@ -35,7 +35,7 @@ CVSource::CVSource(std::string input)
         int id = std::stoi(input);
 
         // Open camera with V4L2 backend
-        _cap = std::shared_ptr<cv::VideoCapture>(new cv::VideoCapture(id, cv::CAP_V4L2));
+        _cap = std::shared_ptr<cv::VideoCapture>(new cv::VideoCapture(id, cv::CAP_AVFOUNDATION));
         
         (*_cap).set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
         (*_cap).set(cv::CAP_PROP_FRAME_WIDTH, 320);
