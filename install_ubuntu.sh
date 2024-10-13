@@ -10,7 +10,7 @@ echo
 ver="$(lsb_release -sr)"
 echo "Found Ubuntu version $ver"
 
-if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]; then
+if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]|| [ "$ver" = "24.04" ]; then
 	echo
 	echo "+-- Installing dependencies ---+"
 	echo
