@@ -13,10 +13,8 @@
 #include <string>
 #include <csignal>
 #include <memory>
-#include <opencv2/opencv.hpp>  // Ensure OpenCV is included
 
 using namespace std;
-using namespace cv;  // Use OpenCV namespace
 
 /// Ctrl-c handling
 bool _active = true;
