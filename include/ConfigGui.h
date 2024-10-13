@@ -21,7 +21,7 @@ SHARED_PTR(CameraModel);
 class ConfigGui
 {
 public:
-    ConfigGui(std::string config_fn, std::string src_override = "");
+    ConfigGui(std::string config_fn);
     ~ConfigGui();
     
     bool is_open();

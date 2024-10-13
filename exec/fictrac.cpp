@@ -27,10 +27,9 @@ int main(int argc, char *argv[])
 {
      PRINT("///");
      PRINT("/// FicTrac:\tA webcam-based method for generating fictive paths.\n///");
-     PRINT("/// Usage:\tfictrac CONFIG_FN [-v LOG_VERBOSITY -s SRC_FN]\n///");
+     PRINT("/// Usage:\tfictrac CONFIG_FN [-v LOG_VERBOSITY]\n///");
      PRINT("/// \tCONFIG_FN\tPath to input config file (defaults to config.txt).");
      PRINT("/// \tLOG_VERBOSITY\t[Optional] One of DBG, INF, WRN, ERR.");
-     PRINT("/// \tSRC_FN\t\t[Optional] Override src_fn param in config file.");
      PRINT("///");
      PRINT("/// Version: %d.%d.%d (build date: %s)", FICTRAC_VERSION_MAJOR, FICTRAC_VERSION_MIDDLE, FICTRAC_VERSION_MINOR, __DATE__);
      PRINT("///\n");
@@ -38,7 +37,6 @@ int main(int argc, char *argv[])
 	/// Parse args.
 	string log_level = "info";
 	string config_fn = "config.txt";
-    string src_fn = "";
     bool do_stats = false;
 	for (int i = 1; i < argc; ++i) {
 		if ((string(argv[i]) == "--verbosity") || (string(argv[i]) == "-v")) {
@@ -52,15 +50,6 @@ int main(int argc, char *argv[])
         }
         else if (string(argv[i]) == "--stats") {
             do_stats = true;
-        }
-        else if ((string(argv[i]) == "--src") || (string(argv[i]) == "-s")) {
-            if (++i < argc) {
-				src_fn = argv[i];
-			}
-			else {
-                LOG_ERR("-s/--src requires one argument!");
-				return -1;
-			}
         }
         else {
             config_fn = argv[i];
@@ -80,7 +69,7 @@ int main(int argc, char *argv[])
         LOG("Set process priority to HIGH!");
     }
 
-    unique_ptr<Trackball> tracker = make_unique<Trackball>(config_fn, src_fn);
+    unique_ptr<Trackball> tracker = make_unique<Trackball>(config_fn);
 
     /// Now Trackball has spawned our worker threads, we set this thread to low priority.
     SetThreadNormalPriority();
@@ -90,6 +79,23 @@ int main(int argc, char *argv[])
         if (!_active) {
             tracker->terminate();
         }
+
+        // Check if display is enabled and get the canvas
+        if (tracker->isDisplayEnabled()) {  // Ensure this method exists in Trackball
+            cv::Mat canvas = tracker->getCanvas();  // Ensure this method exists in Trackball
+            if (!canvas.empty()) {
+                cv::imshow("FicTrac-debug", canvas);
+                uint16_t key = cv::waitKey(1);
+                if (key == 0x1B) {  // esc
+                    LOG("Exiting");
+                    tracker->terminate();
+                } else if (key == 0x52) { // shift+R
+                    LOG("Resetting map!");
+                    tracker->requestReset();  // Ensure this method exists in Trackball
+                }
+            }
+        }
+
         ficsleep(250);
     }
 
