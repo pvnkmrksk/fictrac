@@ -33,7 +33,32 @@ CVSource::CVSource(std::string input)
         LOG_DBG("Trying source as camera id...");
         if (input.size() > 2) { throw std::exception(); }
         int id = std::stoi(input);
-        _cap = std::shared_ptr<cv::VideoCapture>(new cv::VideoCapture(id));
+
+        // Open camera with V4L2 backend
+        _cap = std::shared_ptr<cv::VideoCapture>(new cv::VideoCapture(id, cv::CAP_V4L2));
+        
+        (*_cap).set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
+        (*_cap).set(cv::CAP_PROP_FRAME_WIDTH, 320);
+        (*_cap).set(cv::CAP_PROP_FRAME_HEIGHT, 240);
+        (*_cap).set(cv::CAP_PROP_FPS, 100);
+
+        // Debug commands to check if the settings were applied correctly
+        if ((*_cap).get(cv::CAP_PROP_FOURCC) != cv::VideoWriter::fourcc('M', 'J', 'P', 'G')) {
+            LOG("Warning! Failed to set FOURCC to MJPG.");
+        }
+        if ((*_cap).get(cv::CAP_PROP_FRAME_WIDTH) != 320) {
+            LOG("Warning! Failed to set frame width to 1280.");
+        }
+        if ((*_cap).get(cv::CAP_PROP_FRAME_HEIGHT) != 240) {
+            LOG("Warning! Failed to set frame height to 800.");
+        }
+        if ((*_cap).get(cv::CAP_PROP_FPS) != 100) {
+            LOG("Warning! Failed to set FPS to 100.");
+        }
+
+        // log final settings
+        LOG("Camera settings: FOURCC: %d, width: %d, height: %d, FPS: %d", (*_cap).get(cv::CAP_PROP_FOURCC), (*_cap).get(cv::CAP_PROP_FRAME_WIDTH), (*_cap).get(cv::CAP_PROP_FRAME_HEIGHT), (*_cap).get(cv::CAP_PROP_FPS));
+
         if (!_cap->isOpened()) { throw 0; }
         *_cap >> test_frame;
         if (test_frame.empty()) { throw 0; }
@@ -41,6 +66,7 @@ CVSource::CVSource(std::string input)
         _open = true;
         _live = true;
     }
+
     catch (...) {
         try {
             // then try loading as video file
@@ -159,7 +185,7 @@ bool CVSource::grab(cv::Mat& frame)
     double ts = ts_ms();    // backup, in case the device timestamp is junk
     _ms_since_midnight = ms_since_midnight();
 	_timestamp = _cap->get(cv::CAP_PROP_POS_MSEC);
-    LOG_DBG("Frame captured %dx%dx%d @ %f (t_sys: %f ms, t_day: %f ms)", _frame_cap.cols, _frame_cap.rows, _frame_cap.channels(), _timestamp, ts, _ms_since_midnight);
+    LOG_DBG("Frame captured %dx%d%d @ %f (t_sys: %f ms, t_day: %f ms)", _frame_cap.cols, _frame_cap.rows, _frame_cap.channels(), _timestamp, ts, _ms_since_midnight);
     if (_timestamp <= 0) {
         _timestamp = ts;
     }

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# alias rsoc='bash $HOME/src/fictrac/VR_array/runSocket.sh'
+
 
 # Enabling Mouse Support in tmux
 
