@@ -50,6 +50,47 @@ if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]|| [ "$ver" = "24.04" ]; then
 		echo
 		echo "FicTrac built successfully!"
 		echo
+		
+		echo
+		echo "+-- Setting up aliases --------+"
+		echo
+		
+		# Get absolute path of FICTRAC_DIR
+		FICTRAC_ABS_PATH=$(cd "$FICTRAC_DIR" && pwd)
+		
+		# Add each alias individually with absolute path
+		ALIAS1="alias rcon='bash ${FICTRAC_ABS_PATH}/VR_array/runConfig.sh'"
+		ALIAS2="alias rsoc='bash ${FICTRAC_ABS_PATH}/VR_array/runSocket.sh'"
+		ALIAS3="alias rfic='sudo bash ${FICTRAC_ABS_PATH}/VR_array/runFictrac.sh'"
+		
+		# Check and add each alias
+		if ! grep -q "$ALIAS1" ~/.bashrc; then
+			echo "$ALIAS1" >> ~/.bashrc
+			echo "Added alias to ~/.bashrc: $ALIAS1"
+		else
+			echo "Alias already exists in ~/.bashrc: $ALIAS1"
+		fi
+		
+		if ! grep -q "$ALIAS2" ~/.bashrc; then
+			echo "$ALIAS2" >> ~/.bashrc
+			echo "Added alias to ~/.bashrc: $ALIAS2"
+		else
+			echo "Alias already exists in ~/.bashrc: $ALIAS2"
+		fi
+		
+		if ! grep -q "$ALIAS3" ~/.bashrc; then
+			echo "$ALIAS3" >> ~/.bashrc
+			echo "Added alias to ~/.bashrc: $ALIAS3"
+		else
+			echo "Alias already exists in ~/.bashrc: $ALIAS3"
+		fi
+		
+		echo
+		echo "Please run 'source ~/.bashrc' or start a new terminal to use the aliases"
+		echo "Run 'rcon' to start the config GUI" 
+		echo "Run 'rsoc' to start the socket server"
+		echo "Run 'rfic' to start the fictrac"
+		echo
 	else
 		echo
 		echo "Hmm... something seems to have gone wrong - can't find FicTrac executable."
