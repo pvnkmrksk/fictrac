@@ -15,8 +15,9 @@ if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]|| [ "$ver" = "24.04" ]; then
 	echo "+-- Installing dependencies ---+"
 	echo
 	sudo apt-get update
-	sudo apt-get install -y gcc g++ cmake libavcodec-dev libnlopt-dev libboost-dev libopencv-dev
+	sudo apt-get install -y gcc g++ cmake libavcodec-dev libnlopt-dev libboost-dev libopencv-dev tmux bash python3 python3-pip python3-zmq
 	
+
 	echo
 	echo "+-- Creating build directory --+"
 	echo

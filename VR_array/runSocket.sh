@@ -75,7 +75,7 @@ do
   sock_port="111$(printf %01d $vr)"
 
   # Execute the Python script in the pane
-  tmux send-keys -t VRSession:$window_name "python $republisher_path --zmq-url tcp://*:$zmq_url_port --sock-host $sock_host --sock-port $sock_port" C-m
+  tmux send-keys -t VRSession:$window_name "python3 $republisher_path --zmq-url tcp://*:$zmq_url_port --sock-host $sock_host --sock-port $sock_port" C-m
 done
 
 # Attach to the tmux session after creating all windows and panes
