@@ -1,9 +1,9 @@
-## FicTrac v2.1.1 config file (build date Aug 21 2023)
-c2a_cnrs_xy      : { 191, 171, 128, 272, 20, 212, 99, 132 }
-c2a_cnrs_yz      : { 154, 8, 142, 8, 142, 20, 154, 21 }
-c2a_r            : { 0.746978, -0.777865, -1.521294 }
+## FicTrac v2.1.2 config file (build date Jan 28 2025)
+c2a_cnrs_xy      : {}
+c2a_cnrs_yz      : { 277, 80, 46, 87, 72, 163, 255, 155 }
+c2a_r            : { 0.292715, -0.301806, -1.514842 }
 c2a_src          : c2a_cnrs_yz
-c2a_t            : { -0.996797, -8.772473, 22.910718 }
+c2a_t            : { 0.012867, 0.027952, 3.933274 }
 do_display       : y
 max_bad_frames   : -1
 opt_bound        : 0.35
@@ -12,10 +12,10 @@ opt_max_err      : -1.000000
 opt_max_evals    : 50
 opt_tol          : 0.001
 q_factor         : 6
-roi_c            : { -0.038941, 0.020450, 0.999032 }
-roi_circ         : { 57, 64, 46, 166, 123, 235, 236, 191, 198, 29, 118, 20 }
+roi_c            : { 0.001024, -0.021912, 0.999759 }
+roi_circ         : { 51, 20, 46, 178, 112, 231, 273, 180, 279, 30 }
 roi_ignr         : { { 98, 52, 127, 79, 203, 94, 225, 43, 225, 2, 99, 7 } }
-roi_r            : 0.378736
+roi_r            : 0.169617
 save_debug       : n
 save_raw         : n
 sock_host        : 127.0.0.1
@@ -24,4 +24,4 @@ src_fn           : 2
 src_fps          : -1.000000
 thr_ratio        : 1.25
 thr_win_pc       : 0.25
-vfov             : 47
+vfov             : 17

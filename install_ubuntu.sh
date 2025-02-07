@@ -8,14 +8,14 @@ echo
 
 # Get Ubuntu version	
 ver="$(lsb_release -sr)"
-echo "Found Ubuntu version $ver"
+echo "Found Ubuntu version $ver "
 
 if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]|| [ "$ver" = "24.04" ]; then
 	echo
 	echo "+-- Installing dependencies ---+"
 	echo
 	sudo apt-get update
-	sudo apt-get install -y gcc g++ cmake libavcodec-dev libnlopt-dev libboost-dev libopencv-dev tmux bash python3 python3-pip python3-zmq
+	sudo apt-get install -y gcc g++ cmake libavcodec-dev libnlopt-dev libboost-dev libopencv-dev tmux bash python3 python3-pip python3-zmq dbus-x11
 	
 
 	echo
@@ -85,9 +85,10 @@ if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]|| [ "$ver" = "24.04" ]; then
 		else
 			echo "Alias already exists in ~/.bashrc: $ALIAS3"
 		fi
+
+		source ~/.bashrc
 		
 		echo
-		echo "Please run 'source ~/.bashrc' or start a new terminal to use the aliases"
 		echo "Run 'rcon' to start the config GUI" 
 		echo "Run 'rsoc' to start the socket server"
 		echo "Run 'rfic' to start the fictrac"
@@ -97,4 +98,10 @@ if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]|| [ "$ver" = "24.04" ]; then
 		echo "Hmm... something seems to have gone wrong - can't find FicTrac executable."
 		echo
 	fi
+
+
+fi
+
+else
+	echo "Unsupported Ubuntu version: $ver"
 fi
