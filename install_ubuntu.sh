@@ -10,7 +10,7 @@ echo
 ver="$(lsb_release -sr)"
 echo "Found Ubuntu version $ver "
 
-if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]|| [ "$ver" = "24.04" ]; then
+if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ] || [ "$ver" = "24.04" ]; then
 	echo
 	echo "+-- Installing dependencies ---+"
 	echo
@@ -34,8 +34,8 @@ if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]|| [ "$ver" = "24.04" ]; then
 		echo "Created build dir"
 		cd ./build
 	else
-		echo "Uh oh, something went wrong attempting to create the build dir!"
-		exit
+		echo "Error: Failed to create build directory!"
+		exit 1
 	fi
 	
 	echo
@@ -112,16 +112,23 @@ if [ "$ver" = "22.04" ] || [ "$ver" = "20.04" ]|| [ "$ver" = "24.04" ]; then
 		echo "Run 'rfic' to start the fictrac"
 		echo
 		
-		# Source the bashrc file to activate the aliases in the current session
-		echo "To activate the aliases in your current terminal session, please run:"
-		echo "  source ~/.bashrc  # for bash"
-		echo "  source ~/.zshrc   # for zsh"
+		# Source the configuration files to activate aliases
+		echo "Activating aliases in current session..."
+		if [ -f ~/.bashrc ]; then
+			source ~/.bashrc
+		fi
+		if [ -f ~/.zshrc ]; then
+			source ~/.zshrc
+		fi
+		echo "Aliases activated!"
 		echo
 	else
 		echo
-		echo "Hmm... something seems to have gone wrong - can't find FicTrac executable."
+		echo "Error: FicTrac executable not found after build!"
 		echo
+		exit 1
 	fi
 else
-	echo "Unsupported Ubuntu version: $ver"
+	echo "Error: Unsupported Ubuntu version: $ver"
+	exit 1
 fi

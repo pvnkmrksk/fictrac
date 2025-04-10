@@ -58,11 +58,12 @@ These instructions have been tested for Ubuntu 20.04 and 22.04 within Windows Su
 
 1. Clone the FicTrac repository into a new folder named `fictrac` (Git should already be installed - if not, you can install it via ```sudo apt-get install git``` or you can simply manually download and extract the repository)
 ```
-git clone https://github.com/rjdmoore/fictrac.git
+git clone https://github.com/pvnkmrksk/fictrac.git
 ```
 2. Navigate to the `fictrac` folder and run the install script to install dependencies and build FicTrac.
 ```
 cd fictrac
+chmod +x install_ubuntu.sh
 ./install_ubuntu.sh
 ```
 </details>
@@ -86,7 +87,7 @@ These instructions have been tested for Windows 10 (22H2).
 2. Download and install [Cmake](https://cmake.org/download/) (Windows x64 installer)
 3. Clone the FicTrac repository into a new folder named `fictrac` (if you do not have Git installed, you can download and install for Windows 64-bit from [here](https://git-scm.com/download/win) or you can simply manually download and extract the repository)
 ```
-git clone https://github.com/rjdmoore/fictrac.git
+git clone https://github.com/pvnkmrksk/fictrac.git
 ```
 4. In a Powershell terminal, navigate to the `fictrac` folder and run the install script to install dependencies and build FicTrac.
 ```
@@ -248,3 +249,40 @@ To do so, just follow the standard [Github fork and pull request workflow](https
 ## License
 
 See the [LICENSE file](LICENSE.txt) for more info.
+
+## VR Array Scripts
+
+FicTrac includes a set of scripts for managing multiple VR setups:
+
+### Available Commands
+
+- `rcon [VR_NUMBER]`: Starts the configuration GUI for a specific VR setup
+  - Usage: `rcon 1` (for VR1) or `rcon` (will prompt for VR number)
+  - Default VR range: 1-4
+
+- `rsoc [VR_NUMBER]`: Starts the socket server for a specific VR setup
+  - Usage: `rsoc 1` (for VR1) or `rsoc` (will start all VRs)
+  - Default VR range: 1-4
+  - Socket ports: 1111-1114
+  - ZMQ ports: 9871-9874
+
+- `rfic [VR_NUMBER]`: Starts FicTrac for a specific VR setup
+  - Usage: `rfic 1` (for VR1) or `rfic` (will start all VRs)
+  - Default VR range: 1-4
+
+### Modifying VR Count
+
+To modify the number of VR setups:
+
+1. Edit the following files:
+   - `VR_array/runConfig.sh`
+   - `VR_array/runSocket.sh`
+   - `VR_array/runFictrac.sh`
+
+2. Change the `max_vr` variable in each file to your desired number of VR setups
+
+3. Ensure you have corresponding VR directories (VR1, VR2, etc.) in the `VR_array` folder
+
+4. For socket servers, make sure the port numbers don't conflict with other services:
+   - Socket ports: 1111-111N (where N is max_vr)
+   - ZMQ ports: 9871-987N (where N is max_vr)
